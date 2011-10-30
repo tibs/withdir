@@ -142,7 +142,7 @@ class NewDirectory(Directory):
     If 'show_dirops' is true, then a message will be printed out showing the
     'mkdir' command used to create the new directory.
     """
-    def __init__(self, where, stay_on_error=False, show_pushd=True,
+    def __init__(self, where=None, stay_on_error=False, show_pushd=True,
                  show_popd=False, set_PWD=True, show_dirops=True):
         self.show_dirops = show_dirops
         if where is None:
