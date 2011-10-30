@@ -46,8 +46,17 @@ and::
               with NewDirectory('second_co') as d:
                   make_standard_checkout(d.where, 'second', 'second')
 
+..
+.. note:: This code is extracted from the ``utils`` module in muddle_,
+   since it appears to be generally useful. It is likely that the two
+   are not, at any particular time, identical - for instance, at time
+   of creation of this ``withdir`` repository, this code is more up-to-date
+   than that in muddle.
 
+   Since muddle is licensed under the `MPL 1.1`_, then ``withdir`` also
+   defaults to the same license. If this is a problem for you, please ask.
 
-_muddle:: http://code.google.com/p/muddle/
+.. _muddle: http://code.google.com/p/muddle/
+.. _`MPL 1.1`: http://www.mozilla.org/MPL/
 
 .. vim: set filetype=rst tabstop=8 softtabstop=2 shiftwidth=2 expandtab:
