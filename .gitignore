@@ -1,0 +1,6 @@
+# Ignore standard Python artefacts
+*.pyc
+# Ignore standard vim artefacts
+*~
+*.swp
+*.swo
