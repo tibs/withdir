@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<!--
+  Copyright 2010 Google Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+  Original slides: Marcin Wichary (mwichary@google.com)
+  Modifications: Ernest Delgado (ernestd@google.com)
+                 Alex Russell (slightlyoff@chromium.org)
+
+  landslide modifications: Adam Zapletal (adamzap@gmail.com)
+                           Nicolas Perriault (nperriault@gmail.com)
+-->
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>withdir</title>
+    <!-- Styles -->
+    
+    <link rel="stylesheet" media="print" href="file:///Users/tibs/Python/landslide-1.0.0-py2.6.egg/landslide/themes/default/css/print.css">
+    <link rel="stylesheet" media="screen, projection" href="file:///Users/tibs/Python/landslide-1.0.0-py2.6.egg/landslide/themes/default/css/screen.css">
+    
+    
+    <!-- /Styles -->
+    <!-- Javascripts -->
+    
+    <script type="text/javascript" src="file:///Users/tibs/Python/landslide-1.0.0-py2.6.egg/landslide/themes/default/js/slides.js"></script>
+    
+    
+    <!-- /Javascripts -->
+</head>
+<body>
+  <div id="blank"></div>
+  <div class="presentation">
+    <div id="current_presenter_notes">
+      <div id="presenter_note"></div>
+    </div>
+    <div class="slides">
+      
+      <!-- slide source: slides.rst -->
+      <div class="slide-wrapper">
+        <div class="slide">
+          <div class="inner">
+            
+            <header><h1>withdir</h1></header>
+            
+            
+            <section><h1>Useful tools for changing into a directory</h1>
+<p>Tony Ibbs, October 2011</p>
+<p><a class="reference external" href="https://github.com/tibs/withdir">https://github.com/tibs/withdir</a></p></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="slides.rst">slides.rst</a>
+            </aside>
+            
+            <aside class="page_number">
+              1/15
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: slides.rst -->
+      <div class="slide-wrapper">
+        <div class="slide">
+          <div class="inner">
+            
+            <header><h1>Three classes</h1></header>
+            
+            
+            <section><ol class="arabic simple">
+<li>Directory</li>
+<li>NewDirectory</li>
+<li>TransientDirectory</li>
+</ol></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="slides.rst">slides.rst</a>
+            </aside>
+            
+            <aside class="page_number">
+              2/15
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: slides.rst -->
+      <div class="slide-wrapper">
+        <div class="slide">
+          <div class="inner">
+            
+            <header><h1>Directory</h1></header>
+            
+            
+            <section><p>Simple: change to a directory for the duration of a <tt class="docutils literal">with</tt> clause:</p>
+<pre><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">os</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">withdir</span> <span class="kn">import</span> <span class="n">Directory</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">with</span> <span class="n">Directory</span><span class="p">(</span><span class="s">&#39;~&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">d</span><span class="p">:</span>
+<span class="o">...</span>     <span class="k">print</span> <span class="n">d</span><span class="o">.</span><span class="n">where</span>
+<span class="o">...</span>
+<span class="o">++</span> <span class="n">pushd</span> <span class="n">to</span> <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">tibs</span>
+<span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">tibs</span>
+</pre></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="slides.rst">slides.rst</a>
+            </aside>
+            
+            <aside class="page_number">
+              3/15
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: slides.rst -->
+      <div class="slide-wrapper">
+        <div class="slide">
+          <div class="inner">
+            
+            <header><h1>It does what it says on the tin</h1></header>
+            
+            
+            <section><p>Just to show it does change directory:</p>
+<pre><span class="o">&gt;&gt;&gt;</span> <span class="k">print</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+<span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">tibs</span><span class="o">/</span><span class="n">sw</span><span class="o">/</span><span class="n">withdir</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">with</span> <span class="n">Directory</span><span class="p">(</span><span class="s">&#39;~&#39;</span><span class="p">):</span>
+<span class="o">...</span>     <span class="k">print</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+<span class="o">...</span>
+<span class="o">++</span> <span class="n">pushd</span> <span class="n">to</span> <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">tibs</span>
+<span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">tibs</span>
+</pre>
+<p>(we don't <em>have</em> to use the &quot;<tt class="docutils literal">as d</tt>&quot; part of the <tt class="docutils literal">with</tt> statement).</p></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="slides.rst">slides.rst</a>
+            </aside>
+            
+            <aside class="page_number">
+              4/15
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: slides.rst -->
+      <div class="slide-wrapper">
+        <div class="slide">
+          <div class="inner">
+            
+            <header><h1>It sets $PWD</h1></header>
+            
+            
+            <section><pre><span class="o">&gt;&gt;&gt;</span> <span class="k">with</span> <span class="n">Directory</span><span class="p">(</span><span class="s">&#39;~&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">d</span><span class="p">:</span>
+<span class="o">...</span>     <span class="k">print</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s">&#39;PWD&#39;</span><span class="p">]</span>
+<span class="o">...</span>
+<span class="o">++</span> <span class="n">pushd</span> <span class="n">to</span> <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">tibs</span>
+<span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">tibs</span>
+</pre>
+<p>This can be useful when working in soft-linked directories with commands (like
+<tt class="docutils literal">muddle</tt>) that use <tt class="docutils literal">$PWD</tt> to decide where the user <em>thinks</em> they are.</p></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="slides.rst">slides.rst</a>
+            </aside>
+            
+            <aside class="page_number">
+              5/15
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: slides.rst -->
+      <div class="slide-wrapper">
+        <div class="slide">
+          <div class="inner">
+            
+            <header><h1>For instance</h1></header>
+            
+            
+            <section><pre>tibs:withdir<span class="nv">$ </span><span class="nb">pushd</span> ~/tmp
+~/tmp ~/sw/withdir
+tibs:tmp<span class="nv">$ </span>mkdir fred
+tibs:tmp<span class="nv">$ </span>ln -s fred jim
+tibs:tmp<span class="nv">$ </span><span class="nb">cd </span>jim
+tibs:jim<span class="nv">$ </span><span class="nb">pwd</span>
+/Users/tibs/tmp/jim
+tibs:jim<span class="nv">$ </span>python
+</pre>
+<pre><span class="n">Python</span> <span class="mf">2.6</span><span class="o">.</span><span class="mf">5</span> <span class="p">(</span><span class="n">r265</span><span class="p">:</span><span class="mf">79359</span><span class="p">,</span> <span class="n">Mar</span> <span class="mf">24</span> <span class="mf">2010</span><span class="p">,</span> <span class="mf">01</span><span class="p">:</span><span class="mf">32</span><span class="p">:</span><span class="mf">55</span><span class="p">)</span>
+<span class="p">[</span><span class="n">GCC</span> <span class="mf">4.0</span><span class="o">.</span><span class="mf">1</span> <span class="p">(</span><span class="n">Apple</span> <span class="n">Inc</span><span class="o">.</span> <span class="n">build</span> <span class="mf">5493</span><span class="p">)]</span> <span class="n">on</span> <span class="n">darwin</span>
+<span class="n">Type</span> <span class="s">&quot;help&quot;</span><span class="p">,</span> <span class="s">&quot;copyright&quot;</span><span class="p">,</span> <span class="s">&quot;credits&quot;</span> <span class="ow">or</span> <span class="s">&quot;license&quot;</span> <span class="k">for</span> <span class="n">more</span> <span class="n">information</span><span class="o">.</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">os</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+<span class="s">&#39;/Users/tibs/tmp/fred&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s">&#39;PWD&#39;</span><span class="p">]</span>
+<span class="s">&#39;/Users/tibs/tmp/jim&#39;</span>
+<span class="o">&gt;&gt;&gt;</span>
+</pre>
+<pre>tibs:jim<span class="nv">$ </span><span class="nb">popd</span>
+~/sw/withdir
+</pre></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="slides.rst">slides.rst</a>
+            </aside>
+            
+            <aside class="page_number">
+              6/15
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: slides.rst -->
+      <div class="slide-wrapper">
+        <div class="slide">
+          <div class="inner">
+            
+            <header><h1>Variations on Directory</h1></header>
+            
+            
+            <section><p>You don't need to show the directory changed to:</p>
+<pre><span class="o">&gt;&gt;&gt;</span> <span class="k">with</span> <span class="n">Directory</span><span class="p">(</span><span class="s">&#39;~&#39;</span><span class="p">,</span> <span class="n">show_pushd</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span> <span class="k">as</span> <span class="n">d</span><span class="p">:</span>
+<span class="o">...</span>     <span class="k">print</span> <span class="n">d</span><span class="o">.</span><span class="n">where</span>
+<span class="o">...</span>
+<span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">tibs</span>
+</pre>
+<p>or you can show the directory changed to <em>and</em> that changed back to:</p>
+<pre><span class="o">&gt;&gt;&gt;</span> <span class="k">with</span> <span class="n">Directory</span><span class="p">(</span><span class="s">&#39;~&#39;</span><span class="p">,</span> <span class="n">show_pushd</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">show_popd</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span> <span class="k">as</span> <span class="n">d</span><span class="p">:</span>
+<span class="o">...</span>     <span class="k">print</span> <span class="n">d</span><span class="o">.</span><span class="n">where</span>
+<span class="o">...</span>
+<span class="o">++</span> <span class="n">pushd</span> <span class="n">to</span> <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">tibs</span>
+<span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">tibs</span>
+<span class="o">++</span> <span class="n">popd</span> <span class="n">to</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">tibs</span><span class="o">/</span><span class="n">sw</span><span class="o">/</span><span class="n">withdir</span>
+</pre>
+<p>and you don't <em>have</em> to set PWD:</p>
+<pre><span class="o">&gt;&gt;&gt;</span> <span class="k">print</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s">&#39;PWD&#39;</span><span class="p">]</span>
+<span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">tibs</span><span class="o">/</span><span class="n">sw</span><span class="o">/</span><span class="n">withdir</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">with</span> <span class="n">Directory</span><span class="p">(</span><span class="s">&#39;~&#39;</span><span class="p">,</span> <span class="n">show_pushd</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">set_PWD</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span> <span class="k">as</span> <span class="n">d</span><span class="p">:</span>
+<span class="o">...</span>     <span class="k">print</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s">&#39;PWD&#39;</span><span class="p">]</span>
+<span class="o">...</span>
+<span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">tibs</span><span class="o">/</span><span class="n">sw</span><span class="o">/</span><span class="n">withdir</span>
+</pre></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="slides.rst">slides.rst</a>
+            </aside>
+            
+            <aside class="page_number">
+              7/15
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: slides.rst -->
+      <div class="slide-wrapper">
+        <div class="slide">
+          <div class="inner">
+            
+            <header><h1>Exceptions need not change back</h1></header>
+            
+            
+            <section><pre><span class="o">&gt;&gt;&gt;</span> <span class="k">with</span> <span class="n">Directory</span><span class="p">(</span><span class="s">&#39;~&#39;</span><span class="p">,</span> <span class="n">stay_on_error</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span> <span class="k">as</span> <span class="n">d</span><span class="p">:</span>
+<span class="o">...</span>     <span class="k">print</span> <span class="n">d</span><span class="o">.</span><span class="n">where</span>
+<span class="o">...</span>     <span class="mf">1</span><span class="o">/</span><span class="mf">0</span>
+<span class="o">...</span>
+<span class="o">++</span> <span class="n">pushd</span> <span class="n">to</span> <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">tibs</span>
+<span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">tibs</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+  <span class="n">File</span> <span class="s">&quot;&lt;stdin&gt;&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mf">3</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="ne">ZeroDivisionError</span><span class="p">:</span> <span class="n">integer</span> <span class="n">division</span> <span class="ow">or</span> <span class="n">modulo</span> <span class="n">by</span> <span class="n">zero</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+<span class="s">&#39;/Users/tibs&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s">&#39;PWD&#39;</span><span class="p">]</span>
+<span class="s">&#39;/Users/tibs&#39;</span>
+</pre>
+<p>...but then we need to change back for ourselves:</p>
+<pre><span class="o">&gt;&gt;&gt;</span> <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s">&#39;/Users/tibs/sw/withdir&#39;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+<span class="s">&#39;/Users/tibs/sw/withdir&#39;</span>
+</pre>
+<p>although:</p>
+<pre><span class="o">&gt;&gt;&gt;</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s">&#39;PWD&#39;</span><span class="p">]</span>
+<span class="s">&#39;/Users/tibs&#39;</span>
+</pre></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="slides.rst">slides.rst</a>
+            </aside>
+            
+            <aside class="page_number">
+              8/15
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: slides.rst -->
+      <div class="slide-wrapper">
+        <div class="slide">
+          <div class="inner">
+            
+            <header><h1>NewDirectory</h1></header>
+            
+            
+            <section><p>As you might expect:</p>
+<pre><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">withdir</span> <span class="kn">import</span> <span class="n">NewDirectory</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">with</span> <span class="n">NewDirectory</span><span class="p">(</span><span class="s">&#39;new&#39;</span><span class="p">):</span>
+<span class="o">...</span>     <span class="k">print</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+<span class="o">...</span>
+<span class="o">++</span> <span class="n">mkdir</span>    <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">tibs</span><span class="o">/</span><span class="n">sw</span><span class="o">/</span><span class="n">withdir</span><span class="o">/</span><span class="n">new</span>
+<span class="o">++</span> <span class="n">pushd</span> <span class="n">to</span> <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">tibs</span><span class="o">/</span><span class="n">sw</span><span class="o">/</span><span class="n">withdir</span><span class="o">/</span><span class="n">new</span>
+<span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">tibs</span><span class="o">/</span><span class="n">sw</span><span class="o">/</span><span class="n">withdir</span><span class="o">/</span><span class="n">new</span>
+</pre>
+<p>but also:</p>
+<pre><span class="o">&gt;&gt;&gt;</span> <span class="k">with</span> <span class="n">NewDirectory</span><span class="p">()</span> <span class="k">as</span> <span class="n">d</span><span class="p">:</span>
+<span class="o">...</span>     <span class="k">print</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+<span class="o">...</span>     <span class="k">print</span> <span class="n">d</span><span class="o">.</span><span class="n">where</span>
+<span class="o">...</span>
+<span class="o">++</span> <span class="n">mkdir</span>    <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="mf">4</span><span class="n">k</span><span class="o">/</span><span class="mf">4</span><span class="n">kt1W</span><span class="o">+</span><span class="n">tGE5K</span><span class="o">+</span><span class="n">xz1rlYdtS</span><span class="o">++++</span><span class="n">TM</span><span class="o">/-</span><span class="n">Tmp</span><span class="o">-/</span><span class="n">tmpYgSPqa</span>
+<span class="o">++</span> <span class="n">pushd</span> <span class="n">to</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="mf">4</span><span class="n">k</span><span class="o">/</span><span class="mf">4</span><span class="n">kt1W</span><span class="o">+</span><span class="n">tGE5K</span><span class="o">+</span><span class="n">xz1rlYdtS</span><span class="o">++++</span><span class="n">TM</span><span class="o">/-</span><span class="n">Tmp</span><span class="o">-/</span><span class="n">tmpYgSPqa</span>
+<span class="o">/</span><span class="n">private</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="mf">4</span><span class="n">k</span><span class="o">/</span><span class="mf">4</span><span class="n">kt1W</span><span class="o">+</span><span class="n">tGE5K</span><span class="o">+</span><span class="n">xz1rlYdtS</span><span class="o">++++</span><span class="n">TM</span><span class="o">/-</span><span class="n">Tmp</span><span class="o">-/</span><span class="n">tmpYgSPqa</span>
+<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="mf">4</span><span class="n">k</span><span class="o">/</span><span class="mf">4</span><span class="n">kt1W</span><span class="o">+</span><span class="n">tGE5K</span><span class="o">+</span><span class="n">xz1rlYdtS</span><span class="o">++++</span><span class="n">TM</span><span class="o">/-</span><span class="n">Tmp</span><span class="o">-/</span><span class="n">tmpYgSPqa</span>
+</pre></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="slides.rst">slides.rst</a>
+            </aside>
+            
+            <aside class="page_number">
+              9/15
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: slides.rst -->
+      <div class="slide-wrapper">
+        <div class="slide">
+          <div class="inner">
+            
+            <header><h1>Extra options</h1></header>
+            
+            
+            <section><p>Of course, <tt class="docutils literal">NewDirectory</tt> inherits from <tt class="docutils literal">Directory</tt>, but we also have a
+new argument:</p>
+<pre><span class="o">&gt;&gt;&gt;</span> <span class="k">with</span> <span class="n">NewDirectory</span><span class="p">(</span><span class="n">show_pushd</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">show_dirops</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span> <span class="k">as</span> <span class="n">d</span><span class="p">:</span>
+<span class="o">...</span>     <span class="k">print</span> <span class="n">d</span><span class="o">.</span><span class="n">where</span>
+<span class="o">...</span>
+<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="mf">4</span><span class="n">k</span><span class="o">/</span><span class="mf">4</span><span class="n">kt1W</span><span class="o">+</span><span class="n">tGE5K</span><span class="o">+</span><span class="n">xz1rlYdtS</span><span class="o">++++</span><span class="n">TM</span><span class="o">/-</span><span class="n">Tmp</span><span class="o">-/</span><span class="n">tmp9zCkaR</span>
+</pre>
+<p>which stops the <tt class="docutils literal">++ mkdir</tt> printout.</p></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="slides.rst">slides.rst</a>
+            </aside>
+            
+            <aside class="page_number">
+              10/15
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: slides.rst -->
+      <div class="slide-wrapper">
+        <div class="slide">
+          <div class="inner">
+            
+            <header><h1>An obvious error condition</h1></header>
+            
+            
+            <section><pre><span class="o">&gt;&gt;&gt;</span> <span class="k">with</span> <span class="n">NewDirectory</span><span class="p">(</span><span class="s">&#39;new&#39;</span><span class="p">):</span>
+<span class="o">...</span>     <span class="k">print</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+<span class="o">...</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+  <span class="n">File</span> <span class="s">&quot;&lt;stdin&gt;&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mf">1</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+  <span class="n">File</span> <span class="s">&quot;withdir.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mf">156</span><span class="p">,</span> <span class="ow">in</span> <span class="n">__init__</span>
+    <span class="k">raise</span> <span class="n">GiveUp</span><span class="p">(</span><span class="s">&#39;Directory </span><span class="si">%s</span><span class="s"> already exists&#39;</span><span class="o">%</span><span class="n">where</span><span class="p">)</span>
+<span class="n">withdir</span><span class="o">.</span><span class="n">GiveUp</span><span class="p">:</span> <span class="n">Directory</span> <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">tibs</span><span class="o">/</span><span class="n">sw</span><span class="o">/</span><span class="n">withdir</span><span class="o">/</span><span class="n">new</span> <span class="n">already</span> <span class="n">exists</span>
+</pre></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="slides.rst">slides.rst</a>
+            </aside>
+            
+            <aside class="page_number">
+              11/15
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: slides.rst -->
+      <div class="slide-wrapper">
+        <div class="slide">
+          <div class="inner">
+            
+            <header><h1>TransientDirectory</h1></header>
+            
+            
+            <section><p>Easy enough to guess:</p>
+<pre><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">withdir</span> <span class="kn">import</span> <span class="n">TransientDirectory</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">with</span> <span class="n">TransientDirectory</span><span class="p">(</span><span class="s">&#39;temp&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">d</span><span class="p">:</span>
+<span class="o">...</span>     <span class="k">print</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+<span class="o">...</span>     <span class="n">a</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">where</span>
+<span class="o">...</span>
+<span class="o">++</span> <span class="n">mkdir</span>    <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">tibs</span><span class="o">/</span><span class="n">sw</span><span class="o">/</span><span class="n">withdir</span><span class="o">/</span><span class="n">temp</span>
+<span class="o">++</span> <span class="n">pushd</span> <span class="n">to</span> <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">tibs</span><span class="o">/</span><span class="n">sw</span><span class="o">/</span><span class="n">withdir</span><span class="o">/</span><span class="n">temp</span>
+<span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">tibs</span><span class="o">/</span><span class="n">sw</span><span class="o">/</span><span class="n">withdir</span><span class="o">/</span><span class="n">temp</span>
+<span class="o">++</span> <span class="n">rmtree</span>   <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">tibs</span><span class="o">/</span><span class="n">sw</span><span class="o">/</span><span class="n">withdir</span><span class="o">/</span><span class="n">temp</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span> <span class="n">a</span>
+<span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">tibs</span><span class="o">/</span><span class="n">sw</span><span class="o">/</span><span class="n">withdir</span><span class="o">/</span><span class="n">temp</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="bp">False</span>
+</pre></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="slides.rst">slides.rst</a>
+            </aside>
+            
+            <aside class="page_number">
+              12/15
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: slides.rst -->
+      <div class="slide-wrapper">
+        <div class="slide">
+          <div class="inner">
+            
+            <header><h1>Extra options</h1></header>
+            
+            
+            <section><p>Of course, <tt class="docutils literal">TransientDirectory</tt> inherits from <tt class="docutils literal">NewDirectory</tt>, but it too
+has an extra argument:</p>
+<pre><span class="o">&gt;&gt;&gt;</span> <span class="k">with</span> <span class="n">TransientDirectory</span><span class="p">(</span><span class="s">&#39;temp&#39;</span><span class="p">,</span> <span class="n">keep_on_error</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span> <span class="k">as</span> <span class="n">d</span><span class="p">:</span>
+<span class="o">...</span>     <span class="k">print</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+<span class="o">...</span>     <span class="n">a</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">where</span>
+<span class="o">...</span>     <span class="mf">1</span><span class="o">/</span><span class="mf">0</span>
+<span class="o">...</span>
+<span class="o">++</span> <span class="n">mkdir</span>    <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">tibs</span><span class="o">/</span><span class="n">sw</span><span class="o">/</span><span class="n">withdir</span><span class="o">/</span><span class="n">temp</span>
+<span class="o">++</span> <span class="n">pushd</span> <span class="n">to</span> <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">tibs</span><span class="o">/</span><span class="n">sw</span><span class="o">/</span><span class="n">withdir</span><span class="o">/</span><span class="n">temp</span>
+<span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">tibs</span><span class="o">/</span><span class="n">sw</span><span class="o">/</span><span class="n">withdir</span><span class="o">/</span><span class="n">temp</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+  <span class="n">File</span> <span class="s">&quot;&lt;stdin&gt;&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mf">4</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="ne">ZeroDivisionError</span><span class="p">:</span> <span class="n">integer</span> <span class="n">division</span> <span class="ow">or</span> <span class="n">modulo</span> <span class="n">by</span> <span class="n">zero</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span> <span class="n">a</span>
+<span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">tibs</span><span class="o">/</span><span class="n">sw</span><span class="o">/</span><span class="n">withdir</span><span class="o">/</span><span class="n">temp</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+<span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">tibs</span><span class="o">/</span><span class="n">sw</span><span class="o">/</span><span class="n">withdir</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="bp">True</span>
+</pre></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="slides.rst">slides.rst</a>
+            </aside>
+            
+            <aside class="page_number">
+              13/15
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: slides.rst -->
+      <div class="slide-wrapper">
+        <div class="slide">
+          <div class="inner">
+            
+            <header><h1>Nesting</h1></header>
+            
+            
+            <section><p>Nesting <tt class="docutils literal">with</tt> clauses can be fun, as in some of the <tt class="docutils literal">muddle</tt>
+test code:</p>
+<pre><span class="k">def</span> <span class="nf">make_repos_with_subdomain</span><span class="p">(</span><span class="n">root_dir</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Create git repositories for our subdomain tests.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">repo</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root_dir</span><span class="p">,</span> <span class="s">&#39;repo&#39;</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">NewDirectory</span><span class="p">(</span><span class="s">&#39;repo&#39;</span><span class="p">):</span>
+        <span class="k">with</span> <span class="n">NewDirectory</span><span class="p">(</span><span class="s">&#39;main&#39;</span><span class="p">):</span>
+            <span class="k">with</span> <span class="n">NewDirectory</span><span class="p">(</span><span class="s">&#39;builds&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">d</span><span class="p">:</span>
+                <span class="n">make_build_desc</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">where</span><span class="p">,</span> <span class="n">TOPLEVEL_BUILD_DESC</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">repo</span><span class="o">=</span><span class="n">repo</span><span class="p">))</span>
+            <span class="k">with</span> <span class="n">NewDirectory</span><span class="p">(</span><span class="s">&#39;main_co&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">d</span><span class="p">:</span>
+                <span class="n">make_standard_checkout</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">where</span><span class="p">,</span> <span class="s">&#39;main1&#39;</span><span class="p">,</span> <span class="s">&#39;main&#39;</span><span class="p">)</span>
+            <span class="k">with</span> <span class="n">NewDirectory</span><span class="p">(</span><span class="s">&#39;first_co&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">d</span><span class="p">:</span>
+                <span class="n">make_standard_checkout</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">where</span><span class="p">,</span> <span class="s">&#39;first&#39;</span><span class="p">,</span> <span class="s">&#39;first&#39;</span><span class="p">)</span>
+            <span class="k">with</span> <span class="n">NewDirectory</span><span class="p">(</span><span class="s">&#39;second_co&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">d</span><span class="p">:</span>
+                <span class="n">make_standard_checkout</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">where</span><span class="p">,</span> <span class="s">&#39;second&#39;</span><span class="p">,</span> <span class="s">&#39;second&#39;</span><span class="p">)</span>
+</pre></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="slides.rst">slides.rst</a>
+            </aside>
+            
+            <aside class="page_number">
+              14/15
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+      <!-- slide source: slides.rst -->
+      <div class="slide-wrapper">
+        <div class="slide">
+          <div class="inner">
+            
+            <header><h1>One more thing</h1></header>
+            
+            
+            <section><p>It turns out to be a pain typing <tt class="docutils literal">os.path.join(d.where, <span class="pre">...)</span></tt>
+within these <tt class="docutils literal">with</tt> clauses, so we provide a <tt class="docutils literal">join</tt> method:</p>
+<pre><span class="k">with</span> <span class="n">Directory</span><span class="p">(</span><span class="s">&#39;build&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">d</span><span class="p">:</span>
+    <span class="c"># Things get built in their subdomains, but we&#39;re deploying at top level</span>
+    <span class="n">check_files</span><span class="p">([</span><span class="n">d</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s">&#39;obj&#39;</span><span class="p">,</span> <span class="s">&#39;main_pkg&#39;</span><span class="p">,</span> <span class="s">&#39;x86&#39;</span><span class="p">,</span> <span class="s">&#39;main1&#39;</span><span class="p">),</span>
+                 <span class="n">d</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s">&#39;install&#39;</span><span class="p">,</span> <span class="s">&#39;x86&#39;</span><span class="p">,</span> <span class="s">&#39;main1&#39;</span><span class="p">),</span>
+                 <span class="n">d</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s">&#39;domains&#39;</span><span class="p">,</span> <span class="s">&#39;subdomain1&#39;</span><span class="p">,</span> <span class="s">&#39;obj&#39;</span><span class="p">,</span> <span class="s">&#39;main_pkg&#39;</span><span class="p">,</span> <span class="s">&#39;x86&#39;</span><span class="p">,</span> <span class="s">&#39;subdomain1&#39;</span><span class="p">),</span>
+                 <span class="n">d</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s">&#39;domains&#39;</span><span class="p">,</span> <span class="s">&#39;subdomain1&#39;</span><span class="p">,</span> <span class="s">&#39;install&#39;</span><span class="p">,</span> <span class="s">&#39;x86&#39;</span><span class="p">,</span> <span class="s">&#39;subdomain1&#39;</span><span class="p">),</span>
+                 <span class="n">d</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s">&#39;deploy&#39;</span><span class="p">,</span> <span class="s">&#39;everything&#39;</span><span class="p">,</span> <span class="s">&#39;main1&#39;</span><span class="p">),</span>
+                 <span class="n">d</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s">&#39;deploy&#39;</span><span class="p">,</span> <span class="s">&#39;everything&#39;</span><span class="p">,</span> <span class="s">&#39;sub1&#39;</span><span class="p">,</span> <span class="s">&#39;subdomain1&#39;</span><span class="p">),</span>
+                <span class="p">])</span>
+
+    <span class="c"># The top level build has its own stuff</span>
+    <span class="k">with</span> <span class="n">Directory</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s">&#39;.muddle&#39;</span><span class="p">,</span> <span class="s">&#39;tags&#39;</span><span class="p">))</span> <span class="k">as</span> <span class="n">t</span><span class="p">:</span>
+        <span class="n">check_files</span><span class="p">([</span><span class="n">t</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s">&#39;checkout&#39;</span><span class="p">,</span> <span class="s">&#39;builds&#39;</span><span class="p">,</span> <span class="s">&#39;checked_out&#39;</span><span class="p">),</span>
+                     <span class="n">t</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s">&#39;checkout&#39;</span><span class="p">,</span> <span class="s">&#39;main_co&#39;</span><span class="p">,</span> <span class="s">&#39;checked_out&#39;</span><span class="p">),</span>
+                     <span class="n">t</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s">&#39;package&#39;</span><span class="p">,</span> <span class="s">&#39;main_pkg&#39;</span><span class="p">,</span> <span class="s">&#39;x86-built&#39;</span><span class="p">),</span>
+                     <span class="n">t</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s">&#39;package&#39;</span><span class="p">,</span> <span class="s">&#39;main_pkg&#39;</span><span class="p">,</span> <span class="s">&#39;x86-configured&#39;</span><span class="p">),</span>
+                     <span class="n">t</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s">&#39;package&#39;</span><span class="p">,</span> <span class="s">&#39;main_pkg&#39;</span><span class="p">,</span> <span class="s">&#39;x86-installed&#39;</span><span class="p">),</span>
+                     <span class="n">t</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s">&#39;package&#39;</span><span class="p">,</span> <span class="s">&#39;main_pkg&#39;</span><span class="p">,</span> <span class="s">&#39;x86-postinstalled&#39;</span><span class="p">),</span>
+                     <span class="n">t</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s">&#39;package&#39;</span><span class="p">,</span> <span class="s">&#39;main_pkg&#39;</span><span class="p">,</span> <span class="s">&#39;x86-preconfig&#39;</span><span class="p">),</span>
+                     <span class="n">t</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s">&#39;deployment&#39;</span><span class="p">,</span> <span class="s">&#39;everything&#39;</span><span class="p">,</span> <span class="s">&#39;deployed&#39;</span><span class="p">),</span>
+                    <span class="p">])</span>
+</pre>
+<!-- vim: set filetype=rst tabstop=8 softtabstop=2 shiftwidth=2 expandtab: --></section>
+            
+          </div>
+          <div class="presenter_notes">
+            <header><h1>Presenter Notes</h1></header>
+            <section>
+            
+            </section>
+          </div>
+          <footer>
+            
+            <aside class="source">
+              Source: <a href="slides.rst">slides.rst</a>
+            </aside>
+            
+            <aside class="page_number">
+              15/15
+            </aside>
+          </footer>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+  <div id="toc" class="sidebar hidden">
+    <h2>Table of Contents</h2>
+    <table>
+      <caption>Table of Contents</caption>
+      
+      <tr id="toc-row-1">
+        <th><a href="#slide1">withdir</a></th>
+        <td><a href="#slide1">1</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-2">
+        <th><a href="#slide2">Three classes</a></th>
+        <td><a href="#slide2">2</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-3">
+        <th><a href="#slide3">Directory</a></th>
+        <td><a href="#slide3">3</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-4">
+        <th><a href="#slide4">It does what it says on the tin</a></th>
+        <td><a href="#slide4">4</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-5">
+        <th><a href="#slide5">It sets $PWD</a></th>
+        <td><a href="#slide5">5</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-6">
+        <th><a href="#slide6">For instance</a></th>
+        <td><a href="#slide6">6</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-7">
+        <th><a href="#slide7">Variations on Directory</a></th>
+        <td><a href="#slide7">7</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-8">
+        <th><a href="#slide8">Exceptions need not change back</a></th>
+        <td><a href="#slide8">8</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-9">
+        <th><a href="#slide9">NewDirectory</a></th>
+        <td><a href="#slide9">9</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-10">
+        <th><a href="#slide10">Extra options</a></th>
+        <td><a href="#slide10">10</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-11">
+        <th><a href="#slide11">An obvious error condition</a></th>
+        <td><a href="#slide11">11</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-12">
+        <th><a href="#slide12">TransientDirectory</a></th>
+        <td><a href="#slide12">12</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-13">
+        <th><a href="#slide13">Extra options</a></th>
+        <td><a href="#slide13">13</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-14">
+        <th><a href="#slide14">Nesting</a></th>
+        <td><a href="#slide14">14</a></td>
+      </tr>
+      
+      
+      <tr id="toc-row-15">
+        <th><a href="#slide15">One more thing</a></th>
+        <td><a href="#slide15">15</a></td>
+      </tr>
+      
+      
+    </table>
+  </div>
+  
+  <div id="help" class="sidebar hidden">
+    <h2>Help</h2>
+    <table>
+      <caption>Help</caption>
+      <tr>
+        <th>Table of Contents</th>
+        <td>t</td>
+      </tr>
+      <tr>
+        <th>Exposé</th>
+        <td>ESC</td>
+      </tr>
+      <tr>
+        <th>Full screen slides</th>
+        <td>e</td>
+      </tr>
+      <tr>
+        <th>Presenter View</th>
+        <td>p</td>
+      </tr>
+      <tr>
+        <th>Source Files</th>
+        <td>s</td>
+      </tr>
+      <tr>
+        <th>Slide Numbers</th>
+        <td>n</td>
+      </tr>
+      <tr>
+        <th>Toggle screen blanking</th>
+        <td>b</td>
+      </tr>
+      <tr>
+        <th>Show/hide slide context</th>
+        <td>c</td>
+      </tr>
+      <tr>
+        <th>Notes</th>
+        <td>2</td>
+      </tr>
+      <tr>
+        <th>Help</th>
+        <td>h</td>
+      </tr>
+    </table>
+  </div>
+  <script>main()</script>
+</body>
+</html>
